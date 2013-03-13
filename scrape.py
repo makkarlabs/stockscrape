@@ -25,10 +25,10 @@ def parse_data(html):
             e = {}
             e['contract'] = element.split(":")[0]
             e['bb_qty'] = element.split(":")[6]
-            e['bb_price'] = element.split(":")[7]
+            e['bb_price'] = element.split(":")[7]   
             e['ba_price'] = element.split(":")[8]
             e['ba_qty'] = element.split(":")[9]
-            e['spread'] = float(e['ba_price'])-float(e['bb_price']);
+            e['spread'] = float(e['ba_price'])-float(e['bb_price'])
             e['ltp'] = element.split(":")[10]
             e['volume'] = element.split(":")[11]
             e['oi'] = element.split(":")[12]
