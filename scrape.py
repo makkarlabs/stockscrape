@@ -56,6 +56,7 @@ def parse_data_all(url):
             return json.dumps(data_arr)
         else:
             return ""
+            
 def obtain_data(option):
     if option == "ALL":
         return parse_data_all('http://www.nseindia.com/marketinfo/fxTracker/priceWatchData.jsp?instrument=FUTCUR&currency=ALL')
