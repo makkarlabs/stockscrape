@@ -12,6 +12,10 @@ tbldata.pop(0)
 tbldata.pop(0)
 jsonObj = []
 
+f = open('option.html', 'w')
+f.write(html)
+f.close()
+
 for i in tbldata:
 	cellData = i.find_all('td', align='right')
 	callsObj = {}
@@ -28,9 +32,17 @@ for i in tbldata:
 	callsObj['IV'] = cellData[2].get_text()
 	putsObj['IV'] = cellData[14].get_text()
 
-	callsObj['LTP'] = cellData[3].get_text()
-	putsObj['LTP'] = cellData[13].get_text()
-
+	temp = cellData[3].get_text()
+	ind1 = temp.find('>', 0, len(temp))
+	ind2 = temp.find('<', ind1+1, len(temp))
+	ltp = temp[ind1+2:ind2]
+	callsObj['LTP'] = ltp
+	temp = cellData[13].get_text()
+	ind1 = temp.find('>', 0, len(temp))
+	ind2 = temp.find('<', ind1+1, len(temp))
+	ltp = temp[ind1+2:ind2]
+	putsObj['LTP'] = ltp
+	
 	callsObj['BidQty'] = cellData[4].get_text()
 	putsObj['BidQty'] = cellData[9].get_text()
 
@@ -43,7 +55,7 @@ for i in tbldata:
 	callsObj['AskPrice'] = cellData[6].get_text()
 	putsObj['AskPrice'] = cellData[11].get_text()
 
-	strikePrice = cellData[8].get_text()
+	strikePrice = cellData[8].get_text().encode('utf-8').strip()
 
 	jsonObj.append(json.dumps({'StrikePrice': strikePrice, 'Calls': callsObj, 'Puts': putsObj}))
 
