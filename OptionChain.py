@@ -4,10 +4,10 @@ import json
 from bs4 import BeautifulSoup, SoupStrainer
 from scrape import get_data
 
-def get_options_data(expiryDt, currency='USDINR'):
+def get_options_data(expiryDt):
     if expiryDt == "":
         return json.dumps({'Error': 0})
-    html = get_data('http://www.nseindia.com/live_market/dynaContent/live_watch/fxTracker/optChainDataByExpDates.jsp?symbol='+currency+'&instrument=OPTCUR&expiryDt='+expiryDt)
+    html = get_data('http://www.nseindia.com/live_market/dynaContent/live_watch/fxTracker/optChainDataByExpDates.jsp?symbol=USDINR&instrument=OPTCUR&expiryDt='+expiryDt)
     opttbl = SoupStrainer('div', {'class': 'opttbldata'})
     data = BeautifulSoup(html, 'html.parser', parse_only=opttbl)
     tbldata = data.find_all('tr')
@@ -66,7 +66,16 @@ def get_options_data(expiryDt, currency='USDINR'):
         jsonObj.append(json.dumps({'StrikePrice': strikePrice, 'Calls': callsObj, 'Puts': putsObj}))
     return jsonObj
 
-
+def get_options_dates():
+    html = get_data('http://www.nseindia.com/live_market/dynaContent/live_watch/fxTracker/optChainDataByExpDates.jsp?symbol=USDINR&instrument=OPTCUR')
+    optDates = SoupStrainer('select', {'id': 'expirydate'})
+    data = BeautifulSoup(html, 'html.parser', parse_only=optDates).find_all("option")
+    data.pop(0)
+    dates = []
+    for i in data:
+        dates.append(i.get_text())
+    return json.dumps({'options_dates':dates})
+         
 if __name__=="__main__":
     for i in sys.argv:
         if i.find('.py') + 1:
