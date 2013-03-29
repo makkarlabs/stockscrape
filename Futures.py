@@ -45,13 +45,13 @@ def parse_data_all(url):
                 if element.split(":")[10] != "-":
                     e['ltp'] = element.split(":")[10]
                 if element.split(":")[11] != "-":
-                    e['volume'] = element.split(":")[11]
+                    e['volume'] = element.split(":")[11].replace(",", "")
                 if element.split(":")[12] != "-":
-                    e['oi'] = element.split(":")[12]
+                    e['oi'] = element.split(":")[12].replace(",", "")
                 if element.split(":")[13] != "-":
-                    e['value'] = element.split(":")[13]
+                    e['value'] = element.split(":")[13].replace(",", "")
                 if element.split(":")[14] != "-":
-                    e['notrades'] = element.split(":")[14]
+                    e['notrades'] = element.split(":")[14].replace(",", "")
                 data_arr.append(e)
             return json.dumps(data_arr)
         else:
