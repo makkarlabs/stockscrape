@@ -2,7 +2,7 @@ import sys
 import urllib2
 import json
 from bs4 import BeautifulSoup, SoupStrainer
-from scrape import get_data
+from Futures import get_data
 
 def get_options_data(expiryDt):
     if expiryDt == "":
@@ -77,8 +77,4 @@ def get_options_dates():
     return json.dumps({'options_dates':dates})
          
 if __name__=="__main__":
-    for i in sys.argv:
-        if i.find('.py') + 1:
-            continue
-        else:
-            print get_options_data(i)
+    print get_options_data(sys.argv[1])
